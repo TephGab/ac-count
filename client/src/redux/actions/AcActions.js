@@ -24,6 +24,19 @@ export const getAc = (num) => {
   };
 };
 
+export const getUserAc = (num) => {
+  return (dispatch) => {
+    return axios
+      .get(`${REACT_APP_API_URL}/api/ac/`)
+      .then((res) => {
+       // const array = res.data.slice(0, num);
+        //dispatch({ type: GET_PROJECTS, payload: array });
+        dispatch({ type: GET_ALL_AC, payload: res.data });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
 export const addAc = (data, etat) => {
   return (dispatch) => {
     return axios
