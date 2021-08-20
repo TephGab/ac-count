@@ -9,7 +9,8 @@ export const DELETE_AC = "DELETE_AC";
 
 // errors
 export const GET_AC_ERRORS = "GET_POST_ERRORS";
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const REACT_APP_API_URL = "https://ac-count.herokuapp.com";
+//const REACT_APP_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export const getAc = (num) => {
   return (dispatch) => {

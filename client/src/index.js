@@ -11,14 +11,15 @@ import rootReducer from "./redux/reducers";
 
 // dev tools
 import { composeWithDevTools } from "redux-devtools-extension";
-import { getAc} from "./redux/actions/AcActions";
+//import { getAc} from "./redux/actions/AcActions";
+//require('dotenv').config()
 
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-store.dispatch(getAc());
+// store.dispatch(getAc());
 
 ReactDOM.render(
   <Provider store={store}>
