@@ -1,17 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const acRoutes = require('./routes/AcRoutes');
+const userRoutes = require('./routes/UserRoutes');
 require('dotenv').config({path: '.env'});
 const path = require('path');
 require('./config/db');
 const cors = require('cors');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const app = express();
-
+//process.env.CLIENT_URL
 const corsOptions = {
-  origin: process.env.CLIENT_URL,
+  origin: "https://ac-count.herokuapp.com",
   credentials: true,
   'allowedHeaders': ['sessionId', 'Content-Type'],
   'exposedHeaders': ['sessionId'],
@@ -26,6 +27,8 @@ app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 
 //routes
 app.use('/api/ac', acRoutes);
+app.use('/api/ac', acRoutes);
+
 
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname, '/client/build')));

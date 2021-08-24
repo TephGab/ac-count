@@ -12,15 +12,22 @@ import { updateAc } from '../redux/actions/AcActions';
 const Counter = () => {
   const dispatch = useDispatch();
   const [acData, setacData] = useState({ accessCode: "" });
+  const [doneCount, setdoneCount] = useState(0);
+  const [undoneCount, setundoneCount] = useState(0);
   const [showAc, setshowAc] = useState(true);
   const acs = useSelector(state => state.acReducer);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+  useEffect((res) => {
+    const result = res?.profileObj;
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [])
 
   // console.log(acs);
   const handleSubmitDone = async (e) =>{
     e.preventDefault();
     const acId = acs.map((ac) => ac._id);
-    console.log(acId.toString())
-    if(acs.find( ({ email }) => email === 'tephgab@gmail.com' ))
+    if(acs.find( ({ email }) => email === user.result.email ))
     {
     await dispatch(updateAc(acId, acData.accessCode, true));
     }
@@ -33,8 +40,7 @@ const Counter = () => {
     const handleSubmitUndone = async (e) =>{
       e.preventDefault();
       const acId = acs.map((ac) => ac._id);
-      console.log(acId.toString())
-      if(acs.find( ({ email }) => email === 'tephgab@gmail.com' ))
+      if(acs.find( ({ email }) => email === user.result.email ))
       {
       await dispatch(updateAc(acId, acData.accessCode, false));
       }
@@ -81,7 +87,7 @@ const Counter = () => {
               <table className="table table-striped table-sm">
                 <thead>
                   <tr>
-                    <th scope="col" style={{width:"50%", padding:"0"}}>Done (3)</th>
+                    <th scope="col" style={{width:"50%", padding:"0"}}>Done (39)</th>
                     <th scope="col" style={{width:"50%", padding:"0"}}>Undone (2)</th>
                   </tr>
                 </thead>

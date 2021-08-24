@@ -1,4 +1,25 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
+
 const Topnav = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const logout = (e) =>{
+    e.preventDefault();
+    dispatch({ type: 'LOGOUT' });
+    history.push('/');
+    setUser(null);
+  }
+
+  useEffect((res) => {
+    const result = res?.profileObj;
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [])
+
     return (
         <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">AC-COUNTER</a>
@@ -8,7 +29,13 @@ const Topnav = () => {
         <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"/>
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
-            <a className="nav-link px-3" href="#">Sign out</a>
+            <a className="nav-link px-3" href="#">
+              {user ? <div>
+                {user.result.name} 
+                {/* {user.result.imageUrl} */}
+              </div> : "No User"}
+              <button className="btn btn-danger" onClick={logout}>Logout</button>
+            </a>
           </div>
         </div>
       </header>

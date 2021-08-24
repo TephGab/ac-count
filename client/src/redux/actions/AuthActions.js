@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// posts
-//export const GET_PROJECTS = "GET_PROJECTS";
+export const LOGOUT = "LOGOUT";
+export const AUTH = "AUTH";
+export const LOGOU = "LOGOU";
 export const GET_ALL_AC = "GET_ALL_AC";
 export const ADD_AC = "ADD_AC";
 export const UPDATE_AC = "UPDATE_AC";
