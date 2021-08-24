@@ -10,9 +10,9 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-//process.env.CLIENT_URL
+
 const corsOptions = {
-  origin: "https://ac-count.herokuapp.com",
+  origin: process.env.CLIENT_URL,
   credentials: true,
   'allowedHeaders': ['sessionId', 'Content-Type'],
   'exposedHeaders': ['sessionId'],

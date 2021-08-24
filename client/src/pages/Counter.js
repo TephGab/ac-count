@@ -29,7 +29,7 @@ const Counter = () => {
     const acId = acs.map((ac) => ac._id);
     if(acs.find( ({ email }) => email === user.result.email ))
     {
-    await dispatch(updateAc(acId, acData.accessCode, true));
+    await dispatch(updateAc(acId, acData.accessCode, true, user.result.email));
     }
     else{
         await dispatch(addAc(acData, true));
@@ -42,7 +42,7 @@ const Counter = () => {
       const acId = acs.map((ac) => ac._id);
       if(acs.find( ({ email }) => email === user.result.email ))
       {
-      await dispatch(updateAc(acId, acData.accessCode, false));
+      await dispatch(updateAc(acId, acData.accessCode, false, user.result.email));
       }
       else{
         await dispatch(addAc(acData, false));

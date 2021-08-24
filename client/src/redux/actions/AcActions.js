@@ -38,10 +38,10 @@ export const getUserAc = (num) => {
   };
 };
 
-export const addAc = (data, etat) => {
+export const addAc = (data, etat, email) => {
   return (dispatch) => {
     return axios
-      .post(`${REACT_APP_API_URL}/api/ac/`, {data, etat})
+      .post(`${REACT_APP_API_URL}/api/ac/`, {data, etat, email})
       .then((res) => {
         if (res.data.errors) {
           console.log('error');
