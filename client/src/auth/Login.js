@@ -1,6 +1,8 @@
 import { GoogleLogin } from 'react-google-login'
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { addAc } from "../redux/actions/AcActions";
+
 const Login = () => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -10,6 +12,7 @@ const Login = () => {
          const token = res?.tokenId;
          try {
             dispatch({ type: 'AUTH', data: { result, token} });
+            dispatch(addAc('', true, result.email));
             history.push("/home");
          } catch (error) {
              console.log(error);

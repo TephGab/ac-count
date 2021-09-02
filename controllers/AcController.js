@@ -9,9 +9,10 @@ const ObjectID = require("mongoose").Types.ObjectId;
 // const pipeline = promisify(require("stream").pipeline);
 
 //Auth
+let userEmail;
 
 module.exports.getAc = (req, res) => {
-  acModel.find((err, docs) => {
+  acModel.find({email: userEmail}, (err, docs) => {
     if (!err)
      {
        res.send(docs);
@@ -24,8 +25,8 @@ module.exports.getAc = (req, res) => {
     if(req.body.etat === true){
       const formatedAcCodes = "("+req.body.data.accessCode+"-done) ";
       const newAc = new acModel({
-        email: 'tephgab@gmail.com',
-        doneAccessCode: formatedAcCodes
+        email: req.body.email
+        // isActive: true
       });
       try {
         const ac = await newAc.save();
@@ -37,8 +38,9 @@ module.exports.getAc = (req, res) => {
     if(req.body.etat === false){
       const formatedAcCodes = "("+req.body.data.accessCode+"-undone) ";
       const newAc = new acModel({
-        email: 'tephgab@gmail.com',
-        undoneAccessCode: formatedAcCodes
+        email: req.body.email,
+        undoneAccessCode: formatedAcCodes,
+        isActive: true
       });
       try {
         const ac = await newAc.save();
@@ -47,21 +49,26 @@ module.exports.getAc = (req, res) => {
         return res.status(400).send(err);
       }
     };
+    if(req.body.isGettingUser){
+        userEmail = req.body.email;
+        return 'user_ok';
+    };
     }
 
   module.exports.updateAc = (req, res) => {
     if (!ObjectID.isValid(req.params.id))
       return res.status(400).send("ID unknown : " + req.params.id);
       let updatedRecord;
-      console.log(req.body.etat);
+
       if(req.body.etat){
         updatedRecord = {
-          doneAccessCode: "("+req.body.accessCode+"-done) ",
+          doneAccessCode: "("+ req.body.accessCode +") "
         };
       }
       if(!req.body.etat){
         updatedRecord = {
-          undoneAccessCode: "("+req.body.accessCode+"-undone) ",
+          undoneAccessCode: "("+ req.body.accessCode +") "
+          // undoneAccessCode: "("+req.body.accessCode+"-undone) ",
         };
       }
   console.log(updatedRecord);
@@ -77,25 +84,3 @@ module.exports.getAc = (req, res) => {
       }
     );
   };
-
-  // module.exports.updateAc = async (req, res) => {
-  //   if (!ObjectID.isValid(req.params.id))
-  //     return res.status(400).send("ID unknown : " + req.params.id);
-  
-  //   try {
-  //     await acModel.findByIdAndUpdate(
-  //       req.params.id,
-  //       {
-  //         $addToSet: { doneAccessCode: req.body.doneAccessCode },
-  //       },
-  //       { new: true },
-  //       (err, docs) => {
-  //         if (err) return res.status(400).send(err);
-  //       }
-  //     );
-  //   } catch (err) {
-  //     return res.status(400).send(err);
-  //   }
-  // };
-
-  

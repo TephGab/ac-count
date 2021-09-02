@@ -5,6 +5,7 @@ import axios from "axios";
 export const GET_ALL_AC = "GET_ALL_AC";
 export const ADD_AC = "ADD_AC";
 export const UPDATE_AC = "UPDATE_AC";
+export const COUNT_AC = "COUNT_AC";
 export const DELETE_AC = "DELETE_AC";
 
 // errors
@@ -12,30 +13,22 @@ export const GET_AC_ERRORS = "GET_POST_ERRORS";
 //const REACT_APP_API_URL = "https://ac-count.herokuapp.com";
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-export const getAc = (num) => {
+export const getAc = (email) => {
+  const isGettingUser = true;
+  axios.post(`${REACT_APP_API_URL}/api/ac/`, {isGettingUser, email})
+  // .then((res) => {
   return (dispatch) => {
     return axios
       .get(`${REACT_APP_API_URL}/api/ac/`)
       .then((res) => {
-       // const array = res.data.slice(0, num);
-        //dispatch({ type: GET_PROJECTS, payload: array });
+        const totalDone = res.data[0].doneAccessCode.length;
+        const totalUndone = res.data[0].undoneAccessCode.length;
+        dispatch({ type: COUNT_AC, payload: { totalDone, totalUndone }});
         dispatch({ type: GET_ALL_AC, payload: res.data });
       })
       .catch((err) => console.log(err));
-  };
-};
-
-export const getUserAc = (num) => {
-  return (dispatch) => {
-    return axios
-      .get(`${REACT_APP_API_URL}/api/ac/`)
-      .then((res) => {
-       // const array = res.data.slice(0, num);
-        //dispatch({ type: GET_PROJECTS, payload: array });
-        dispatch({ type: GET_ALL_AC, payload: res.data });
-      })
-      .catch((err) => console.log(err));
-  };
+    };
+  // });
 };
 
 export const addAc = (data, etat, email) => {

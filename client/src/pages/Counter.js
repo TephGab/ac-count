@@ -1,7 +1,7 @@
 import Sidenav from "../components/Sidenav";
 import Topnav from "../components/Topnav";
 import { Check, AlertCircle } from "react-feather";
-import swal from 'sweetalert';
+//import swal from 'sweetalert';
 import { isEmpty } from '../Utils';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,45 +14,103 @@ const Counter = () => {
   const [acData, setacData] = useState({ accessCode: "" });
   const [doneCount, setdoneCount] = useState(0);
   const [undoneCount, setundoneCount] = useState(0);
+  const [totaldone, settotaldone] = useState();
+  const [totalundone, settotalundone] = useState();
   const [showAc, setshowAc] = useState(true);
   const acs = useSelector(state => state.acReducer);
+  const counted_acs = useSelector(state => state.countAcReducer);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const [acBrut, setacBrut] = useState();
 
   useEffect((res) => {
     const result = res?.profileObj;
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [])
+  }, []);
 
-  // console.log(acs);
-  const handleSubmitDone = async (e) =>{
-    e.preventDefault();
-    const acId = acs.map((ac) => ac._id);
-    if(acs.find( ({ email }) => email === user.result.email ))
-    {
-    await dispatch(updateAc(acId, acData.accessCode, true, user.result.email));
+  const acBrutCount = () =>{
+    let allAcs = acData.accessCode;
+    let removeWords = allAcs.replace(/Review|x|of|Session|Do|you|want|to|dismiss|this|Session|Cancel|-|OK/gi, " ");
+    let removeSpaces = removeWords.replace(/\s+|/gi, '');
+
+   var checkAc = /[1234567890]/ig
+   var checkDOneUndone = /complete|restart/ig
+   var tabloAc = removeSpaces.match(checkAc);
+   var tabloDoneUndone = removeSpaces.match(checkDOneUndone);
+   var tab1 = [];
+   var tab2 = [];
+   var tot_done = [];
+   var tot_undone = [];
+   var tabString = tabloAc.toString();
+   var tabOnlyNum = tabString.replace(/,/gi, " ");
+   var removeAllSpaces = tabOnlyNum.replace(/\s+|/gi, '');
+   for (let i = 0; i <= removeAllSpaces.length-9 ; i+=9) {
+     tab1.push(removeAllSpaces.substring(i, i+9));
+   }
+
+   for (let i = 0; i < tab1.length; i++) {
+     let part1 = tab1[i].substring(0, 3) + '-';
+     let part2 = tab1[i].substring(3, 6) + '-';
+     let part3 = tab1[i].substring(6, 9)
+     tab2.push(part1 + part2 + part3);
+   }
+   
+   for (let i = 0; i < tabloDoneUndone.length; i++) {
+      if(tabloDoneUndone[i] == 'complete'){
+        tab2[i] = tab2[i] + '-DONE'; 
+      }
+   }
+
+   for (let i = 0; i < tab2.length; i++) {
+    if(tab2[i].includes('DONE')){
+      tot_done.push(tab2[i]); 
     }
     else{
-        await dispatch(addAc(acData, true));
+      tot_undone.push(tab2[i]); 
+    }
+ }
+  const acInfo = acs.find( ({ email }) => email === user.result.email )
+  handleSubmitDone({totalDone: tot_done});
+  handleSubmitUndone({totalUndone: tot_undone})
+ }
+
+  const handleSubmitDone = async (e) =>{
+    console.log(e);
+   // e.preventDefault();
+   const acInfo = acs.find( ({ email }) => email === user.result.email )
+   // const acId = acs.map((ac) => ac._id);
+    if(acInfo.email)
+    {
+      for (let i = 0; i < e.totalDone.length; i++) {
+        await dispatch(updateAc(acInfo._id, e.totalDone[i], true, user.result.email));
+      }
+    }
+    else{
+      await dispatch(addAc(totaldone, true, user.result.email));
     }
     setshowAc(true);
-    }
+  }
 
     const handleSubmitUndone = async (e) =>{
-      e.preventDefault();
-      const acId = acs.map((ac) => ac._id);
-      if(acs.find( ({ email }) => email === user.result.email ))
+      //e.preventDefault();
+     // const acId = acs.map((ac) => ac._id);
+     const acInfo = acs.find( ({ email }) => email === user.result.email )
+      if(acInfo.email)
       {
-      await dispatch(updateAc(acId, acData.accessCode, false, user.result.email));
+        for (let i = 0; i < e.totalUndone.length; i++) {
+          console.log(i)
+          await dispatch(updateAc(acInfo._id, e.totalUndone[i], false, user.result.email));
+        }
       }
       else{
-        await dispatch(addAc(acData, false));
+        await dispatch(addAc(acData, false, user.result.email));
       }
       setshowAc(true);
-      }
+    }
 
   useEffect(() => {
     if(showAc){
-      dispatch(getAc());
+      setUser(JSON.parse(localStorage.getItem('profile')));
+      dispatch(getAc(user.result.email));
       setshowAc(false);
       setacData({ accessCode: "" });
   }
@@ -79,7 +137,8 @@ const Counter = () => {
             <textarea className="form-control" id="textAreaExample6" placeholder="Add access code" rows="3" name="titre" value={acData.accessCode} onChange={(e)=> setacData({ ...acData, accessCode: e.target.value})} ></textarea>
             <div><button onClick={handleSubmitDone} className="btn btn-primary m-1" style={{width: '49%'}}> <Check /> Add as done</button>
                  <button onClick={handleSubmitUndone} className="btn btn-warning m-1" style={{width: '49%'}}> <AlertCircle/> Add as undone</button></div>
-            {/* <label className="form-label" for="textAreaExample6">100% width of the parent</label> */}
+            {/* <label className="form-label" htmlfor="textAreaExample6">100% width of the parent</label> */}
+            <button className="btn btn-primary" onClick={acBrutCount}>Ac brut count</button>
             </div>
 
             {/* <h2>Section title</h2> */}
@@ -87,8 +146,8 @@ const Counter = () => {
               <table className="table table-striped table-sm">
                 <thead>
                   <tr>
-                    <th scope="col" style={{width:"50%", padding:"0"}}>Done (39)</th>
-                    <th scope="col" style={{width:"50%", padding:"0"}}>Undone (2)</th>
+                    <th scope="col" style={{width:"50%", padding:"0"}}>Done: {!isEmpty(counted_acs) && counted_acs.totalDone } </th>
+                    <th scope="col" style={{width:"50%", padding:"0"}}>Undone: {!isEmpty(counted_acs) && counted_acs.totalUndone }</th>
                   </tr>
                 </thead>
                 <tbody>
