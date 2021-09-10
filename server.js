@@ -27,7 +27,6 @@ app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 
 //routes
 app.use('/api/ac', acRoutes);
-app.use('/api/ac', acRoutes);
 
 
 if(process.env.NODE_ENV === 'production'){

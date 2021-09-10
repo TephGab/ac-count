@@ -1,4 +1,5 @@
 const acModel = require("../models/AcModel");
+const oldAcModel = require("../models/OldAcModel");
 // const bcrypt = require("bcrypt");
 // const jwt = require("jsonwebtoken");
 
@@ -35,7 +36,7 @@ module.exports.getAc = (req, res) => {
         return res.status(400).send(err);
       }
     };
-    if(req.body.etat === false){
+    if(req.body.etat === false && req.body.isDel != "reset"){
       const formatedAcCodes = "("+req.body.data.accessCode+"-undone) ";
       const newAc = new acModel({
         email: req.body.email,
@@ -48,6 +49,34 @@ module.exports.getAc = (req, res) => {
       } catch (err) {
         return res.status(400).send(err);
       }
+    };
+    if(req.body.etat === false && req.body.isDel == "reset"){
+      console.log('controller reset')
+      const newAc = new oldAcModel({
+        _id: req.body.data[0]._id,
+        email:req.body.data[0].email,
+        doneAccessCode: req.body.data[0].doneAccessCode,
+        undoneAccessCode: req.body.data[0].undoneAccessCode
+      });
+      try {
+        const ac = await newAc.save();
+        return res.status(201).json(ac);
+      } catch (err) {
+        return res.status(400).send(err);
+      }
+      console.log('reset success')
+      // const formatedAcCodes = "("+req.body.data.accessCode+"-undone) ";
+      // const newAc = new acModel({
+      //   email: req.body.email,
+      //   undoneAccessCode: formatedAcCodes,
+      //   isActive: true
+      // });
+      // try {
+      //   const ac = await newAc.save();
+      //   return res.status(201).json(ac);
+      // } catch (err) {
+      //   return res.status(400).send(err);
+      // }
     };
     if(req.body.isGettingUser){
         userEmail = req.body.email;
@@ -83,4 +112,14 @@ module.exports.getAc = (req, res) => {
         else console.log("Update error : " + err);
       }
     );
+  };
+
+  module.exports.deleteAc = (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+      return res.status(400).send("ID unknown : " + req.params.id);
+  
+    acModel.findByIdAndRemove(req.params.id, (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("Delete error : " + err);
+    });
   };

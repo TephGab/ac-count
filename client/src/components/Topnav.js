@@ -30,11 +30,11 @@ const Topnav = () => {
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
             <a className="nav-link px-3" href="#">
-              {user ? <div>
-                {user.result.name} 
-                {/* {user.result.imageUrl} */}
-              </div> : "No User"}
-              <button className="btn btn-danger" onClick={logout}>Logout</button>
+              {user ? <span>
+                <span className="m-2">{user.result.name}</span>
+                <img src={user.result.imageUrl} alt="imgUser" className="ml-2" style={{width: "45px", borderRadius: "50px 50px"}}/>
+              </span> : "No User"}
+              <button className="btn btn-danger ml-2 btn-sm" onClick={logout}>Logout</button>
             </a>
           </div>
         </div>

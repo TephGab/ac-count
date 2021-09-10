@@ -29,22 +29,23 @@ const Login = () => {
                 <form>
                     <h1 className="h3 mb-3 fw-normal">Please login</h1>
 
-                    <div className="form-floating">
+                    {/* <div className="form-floating">
                     <input type="email" className="form-control" id="floatingInput"/>
                     <label for="floatingInput">Email address</label>
                     </div>
                     <div className="form-floating">
                     <input type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
                     <label for="floatingPassword">Password</label>
-                    </div>
+                    </div> */}
 
-                    <div className="checkbox mb-3">
+                    {/* 
                     <label>
                         <input type="checkbox" value="remember-me"/> Remember me
                     </label>
                     </div>
                     <button className="w-100 btn btn-lg btn-primary" type="submit">Login</button>
-                    <div>
+                    <div> */}
+                    <div className="checkbox mb-3">
                     <GoogleLogin 
                         clientId="342407664687-p76c6jo5b2mdhm7anjqtv2f1vnjfnkf1.apps.googleusercontent.com"
                         render={(renderProps) => (
@@ -55,7 +56,7 @@ const Login = () => {
                         cookiePolicy="single_host_origin"
                         />
                     </div>
-                    <p className="mt-5 mb-3 text-muted">&copy; 2021</p>
+                    {/* <p className="mt-5 mb-3 text-muted">&copy; 2021</p> */}
                 </form>
          </main>
         </div>

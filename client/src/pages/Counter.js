@@ -1,6 +1,6 @@
 import Sidenav from "../components/Sidenav";
 import Topnav from "../components/Topnav";
-import { Check, AlertCircle } from "react-feather";
+import { AlertCircle, RefreshCcw } from "react-feather";
 //import swal from 'sweetalert';
 import { isEmpty } from '../Utils';
 import { useState, useEffect } from 'react';
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addAc } from "../redux/actions/AcActions";
 import { getAc } from '../redux/actions/AcActions';
 import { updateAc } from '../redux/actions/AcActions';
+import { deleteAc } from '../redux/actions/AcActions';
 
 const Counter = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const Counter = () => {
   const [totalundone, settotalundone] = useState();
   const [showAc, setshowAc] = useState(true);
   const acs = useSelector(state => state.acReducer);
-  const counted_acs = useSelector(state => state.countAcReducer);
+  const [totalAcs, settotalAcs] = useState();
+  let counted_acs = useSelector(state => state.countAcReducer);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [acBrut, setacBrut] = useState();
 
@@ -107,6 +109,17 @@ const Counter = () => {
       setshowAc(true);
     }
 
+    const acReset = () => {
+      settotalAcs(acs)
+      dispatch(addAc(acs, false, user.result.email, 'reset'));
+      const acInfo = acs.find( ({ email }) => email === user.result.email )
+      dispatch(deleteAc(acInfo._id))
+      counted_acs.totalDone = 0;
+      counted_acs.totalUndone = 0;
+      dispatch(addAc('', true, user.result.email));
+      // console.log('Acs has is running');
+    } 
+
   useEffect(() => {
     if(showAc){
       setUser(JSON.parse(localStorage.getItem('profile')));
@@ -126,19 +139,30 @@ const Counter = () => {
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h3 className="h2">Counter</h3>
-              <div className="btn-toolbar mb-2 mb-md-0">
-                <div className="btn-group me-2">
+              <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
                 </div>
+                <button type="button" class="btn btn-danger btn-sm btn-outline-secondary" onClick={acReset}>
+                  <span><AlertCircle/></span>
+                  Clear
+                </button>
               </div>
             </div>
 
             {/* Text area accodes */}
             <div className="form-outline mb-4">
             <textarea className="form-control" id="textAreaExample6" placeholder="Add access code" rows="3" name="titre" value={acData.accessCode} onChange={(e)=> setacData({ ...acData, accessCode: e.target.value})} ></textarea>
-            <div><button onClick={handleSubmitDone} className="btn btn-primary m-1" style={{width: '49%'}}> <Check /> Add as done</button>
-                 <button onClick={handleSubmitUndone} className="btn btn-warning m-1" style={{width: '49%'}}> <AlertCircle/> Add as undone</button></div>
+            <div>
+              {
+              /* <button onClick={handleSubmitDone} className="btn btn-primary m-1" style={{width: '49%'}}> <Check /> Add as done</button>
+              <button onClick={handleSubmitUndone} className="btn btn-warning m-1" style={{width: '49%'}}> <AlertCircle/> Add as undone</button> 
+              */}
+               <button className="btn btn-primary m-1 btn-block" style={{width: '98%', fontWeight: 'bold'}} onClick={acBrutCount}>Count and classify</button>
+              </div> 
             {/* <label className="form-label" htmlfor="textAreaExample6">100% width of the parent</label> */}
-            <button className="btn btn-primary" onClick={acBrutCount}>Ac brut count</button>
+           
             </div>
 
             {/* <h2>Section title</h2> */}

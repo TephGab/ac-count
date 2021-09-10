@@ -1,6 +1,7 @@
 import {
     GET_ALL_AC,
     ADD_AC,
+    ADD_OLD_AC,
     UPDATE_AC,
     DELETE_AC
   } from "../actions/AcActions";
@@ -12,6 +13,8 @@ import {
       case GET_ALL_AC:
         return action.payload;
       case ADD_AC:
+        return [...state, action.payload]
+      case ADD_OLD_AC:
         return [...state, action.payload]
       case UPDATE_AC:
       return state.map((ac) => {

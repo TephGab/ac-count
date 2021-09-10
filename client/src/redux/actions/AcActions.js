@@ -1,12 +1,12 @@
 import axios from "axios";
 
-// posts
-//export const GET_PROJECTS = "GET_PROJECTS";
 export const GET_ALL_AC = "GET_ALL_AC";
 export const ADD_AC = "ADD_AC";
 export const UPDATE_AC = "UPDATE_AC";
 export const COUNT_AC = "COUNT_AC";
 export const DELETE_AC = "DELETE_AC";
+
+export const ADD_OLD_AC = "ADD_OLD_AC";
 
 // errors
 export const GET_AC_ERRORS = "GET_POST_ERRORS";
@@ -31,20 +31,21 @@ export const getAc = (email) => {
   // });
 };
 
-export const addAc = (data, etat, email) => {
+export const addAc = (data, etat, email, isDel) => {
   return (dispatch) => {
     return axios
-      .post(`${REACT_APP_API_URL}/api/ac/`, {data, etat, email})
+      .post(`${REACT_APP_API_URL}/api/ac/`, {data, etat, email, isDel})
       .then((res) => {
         if (res.data.errors) {
           console.log('error');
-          // dispatch({ type: GET_PROJECT_ERRORS, payload: res.data.errors });
         } else {
-          dispatch({ type: ADD_AC, payload: res.data });
+          if(isDel === 'reset'){
+            dispatch({ type: ADD_OLD_AC, payload: res.data });
+            console.log('reset action en fonction')
+          }else{
+            dispatch({ type: ADD_AC, payload: res.data });
+          }
           console.log('Success');
-          // const array = res.data.slice(0, data);
-          // dispatch({ type: GET_PROJECTS, payload: array });
-          // dispatch({ type: GET_PROJECT_ERRORS, payload: "" });
         }
       });
   };
