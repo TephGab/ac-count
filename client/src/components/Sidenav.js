@@ -1,7 +1,17 @@
 import { NavLink } from "react-router-dom";
 import { Home, BarChart2 } from 'react-feather';
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const Sidenav = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+  useEffect((res) => {
+    const result = res?.profileObj;
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [])
+
     return (
         <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div className="position-sticky pt-3">
@@ -18,6 +28,15 @@ const Sidenav = () => {
                 Counter
               </NavLink>
             </li>
+            {user?.email === "artengineerdaudier4@gmail.com" ? 
+            <li className="nav-item">
+            <NavLink exact to="/ac-old" className="nav-link" activeClassName="navActive">  
+               {/* <BarChart2 size={17}/> */}
+                Old-ac-counter
+              </NavLink>
+            </li> 
+            : ""}
+            
           </ul>
   
           <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -40,3 +59,6 @@ const Sidenav = () => {
   }
 
   export default Sidenav;
+
+
+  

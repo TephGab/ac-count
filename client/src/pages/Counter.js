@@ -35,7 +35,7 @@ const Counter = () => {
     let removeSpaces = removeWords.replace(/\s+|/gi, '');
 
    var checkAc = /[1234567890]/ig
-   var checkDOneUndone = /complete|restart/ig
+   var checkDOneUndone = /complete|restart|done|undone/ig,ci
    var tabloAc = removeSpaces.match(checkAc);
    var tabloDoneUndone = removeSpaces.match(checkDOneUndone);
    var tab1 = [];
