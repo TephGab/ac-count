@@ -28,7 +28,7 @@ const Sidenav = () => {
                 Counter
               </NavLink>
             </li>
-            {user?.email === "artengineerdaudier4@gmail.com" ? 
+            {user?.result.email == "artengineerdaudier4@gmail.com" ? 
             <li className="nav-item">
             <NavLink exact to="/ac-old" className="nav-link" activeClassName="navActive">  
                {/* <BarChart2 size={17}/> */}

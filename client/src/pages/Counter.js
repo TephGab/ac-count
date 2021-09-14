@@ -31,11 +31,11 @@ const Counter = () => {
 
   const acBrutCount = () =>{
     let allAcs = acData.accessCode;
-    let removeWords = allAcs.replace(/Review|x|of|Session|Do|you|want|to|dismiss|this|Session|Cancel|-|OK/gi, " ");
+    let removeWords = allAcs.replace(/Review|x|of|Session|Do|you|want|to|(|)|dismiss|this|Session|Cancel|-|OK/gi, " ");
     let removeSpaces = removeWords.replace(/\s+|/gi, '');
 
    var checkAc = /[1234567890]/ig
-   var checkDOneUndone = /complete|restart|done|undone/ig,ci
+   var checkDOneUndone = /completed|restart|done|undone/ig,ci
    var tabloAc = removeSpaces.match(checkAc);
    var tabloDoneUndone = removeSpaces.match(checkDOneUndone);
    var tab1 = [];
@@ -57,17 +57,17 @@ const Counter = () => {
    }
    
    for (let i = 0; i < tabloDoneUndone.length; i++) {
-      if(tabloDoneUndone[i] == 'complete'){
-        tab2[i] = tab2[i] + '-DONE'; 
+      if(tabloDoneUndone[i] == 'completed'){
+        tab2[i] = tab2[i] + '-completed'; 
       }
    }
 
    for (let i = 0; i < tab2.length; i++) {
-    if(tab2[i].includes('DONE')){
+    if(tab2[i].includes('completed')){
       tot_done.push(tab2[i]); 
     }
     else{
-      tot_undone.push(tab2[i]); 
+      tot_undone.push(tab2[i] + '-restart'); 
     }
  }
   const acInfo = acs.find( ({ email }) => email === user.result.email )
