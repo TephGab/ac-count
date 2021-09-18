@@ -11,8 +11,8 @@ const Login = () => {
          const result = res?.profileObj;
          const token = res?.tokenId;
          try {
-            dispatch({ type: 'AUTH', data: { result, token} });
             dispatch(addAc('', true, result.email));
+            dispatch({ type: 'AUTH', data: { result, token} });
             history.push("/home");
          } catch (error) {
              console.log(error);

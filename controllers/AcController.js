@@ -24,17 +24,33 @@ module.exports.getAc = (req, res) => {
 
   module.exports.addAc = async (req, res) => {
     if(req.body.etat === true){
-      const formatedAcCodes = "("+req.body.data.accessCode+"-done) ";
-      const newAc = new acModel({
-        email: req.body.email
-        // isActive: true
-      });
-      try {
-        const ac = await newAc.save();
-        return res.status(201).json(ac);
-      } catch (err) {
-        return res.status(400).send(err);
-      }
+      if(!acModel.find({email: req.body.email}))
+       {
+        console.log("User has not clear yet");
+        }
+        else{
+          const newAc = new acModel({
+            email: req.body.email
+          });
+          try {
+            const ac = await newAc.save();
+            return res.status(201).json(ac);
+          } catch (err) {
+            return res.status(400).send(err);
+          }
+        }
+      // });
+      // const formatedAcCodes = "("+req.body.data.accessCode+"-done) ";
+      // const newAc = new acModel({
+      //   email: req.body.email
+      //   // isActive: true
+      // });
+      // try {
+      //   const ac = await newAc.save();
+      //   return res.status(201).json(ac);
+      // } catch (err) {
+      //   return res.status(400).send(err);
+      // }
     };
     if(req.body.etat === false && req.body.isDel != "reset"){
       const formatedAcCodes = "("+req.body.data.accessCode+"-undone) ";
