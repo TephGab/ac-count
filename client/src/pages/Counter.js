@@ -141,8 +141,8 @@ const Counter = () => {
               <h3 className="h2">Counter</h3>
               <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                  {/* <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> */}
                 </div>
                 <button type="button" class="btn btn-danger btn-sm btn-outline-secondary" onClick={acReset}>
                   <span><AlertCircle/></span>
@@ -167,7 +167,25 @@ const Counter = () => {
 
             {/* <h2>Section title</h2> */}
             <div className="table-responsive">
-              <table className="table table-striped table-sm">
+            <table className="table table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col" style={{display: 'flex', alignItems: 'center', padding:"0", fontSize: '1rem'}}>
+                      <div className="w-50 m-0 p-0"> Undone: <span style={{color: '#CB2256'}}>{!isEmpty(counted_acs) && counted_acs.totalUndone} </span></div>
+                      <div className="w-50 m-0 p-0"> Done: <span style={{color: '#6167B6'}}> {!isEmpty(counted_acs) && counted_acs.totalDone }</span></div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{maxWidth:"100%", whiteSpace: "normal", wordWrap: "normal"}}>
+                      {!isEmpty(acs) && acs.map((ac, id) => { return <div style={{color: '#6167B6'}}> { ac.doneAccessCode } </div> })}
+                      {!isEmpty(acs) && acs.map((ac, id) => { return <div style={{color: '#CB2256'}}> { ac.undoneAccessCode } </div> })}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* <table className="table table-striped table-sm">
                 <thead>
                   <tr>
                     <th scope="col" style={{width:"50%", padding:"0"}}>Done: {!isEmpty(counted_acs) && counted_acs.totalDone } </th>
@@ -184,7 +202,7 @@ const Counter = () => {
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> */}
             </div>
           </main>
         </div>
