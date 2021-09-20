@@ -26,9 +26,12 @@ module.exports.getAc = (req, res) => {
     if(req.body.etat === true){
       if(!acModel.find({email: req.body.email}))
        {
-        console.log("User has not clear yet");
+         console.log(req.body.email)
+         console.log("User has not clear yet");
         }
         else{
+          console.log("Adding new user on login");
+          console.log(req.body.email)
           const newAc = new acModel({
             email: req.body.email
           });

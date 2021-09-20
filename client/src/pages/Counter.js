@@ -171,16 +171,16 @@ const Counter = () => {
                 <thead>
                   <tr>
                     <th scope="col" style={{display: 'flex', alignItems: 'center', padding:"0", fontSize: '1rem'}}>
-                      <div className="w-50 m-0 p-0"> Undone: <span style={{color: '#CB2256'}}>{!isEmpty(counted_acs) && counted_acs.totalUndone} </span></div>
-                      <div className="w-50 m-0 p-0"> Done: <span style={{color: '#6167B6'}}> {!isEmpty(counted_acs) && counted_acs.totalDone }</span></div>
+                      <div className="w-50 m-0 p-0"> Undone: <span style={{color: '##38761d'}}>{!isEmpty(counted_acs) && counted_acs.totalUndone} </span></div>
+                      <div className="w-50 m-0 p-0"> Done: <span style={{color: '#d45a00'}}> {!isEmpty(counted_acs) && counted_acs.totalDone }</span></div>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td style={{maxWidth:"100%", whiteSpace: "normal", wordWrap: "normal"}}>
-                      {!isEmpty(acs) && acs.map((ac, id) => { return <div style={{color: '#6167B6'}}> { ac.doneAccessCode } </div> })}
-                      {!isEmpty(acs) && acs.map((ac, id) => { return <div style={{color: '#CB2256'}}> { ac.undoneAccessCode } </div> })}
+                      {!isEmpty(acs) && acs.map((ac, id) => { return <div style={{color: '#38761d', background: '#fdf8e4'}}> { ac.doneAccessCode } </div> })}
+                      {!isEmpty(acs) && acs.map((ac, id) => { return <div style={{color: '#d45a00', background: '#fdf8e4'}}> { ac.undoneAccessCode } </div> })}
                     </td>
                   </tr>
                 </tbody>
