@@ -24,14 +24,14 @@ module.exports.getAc = (req, res) => {
 
   module.exports.addAc = async (req, res) => {
     if(req.body.etat === true){
-      if(!acModel.find({email: req.body.email}))
+      if(acModel.find({email: req.body.email}).select('email'))
        {
-         console.log(req.body.email)
-         console.log("User has not clear yet");
+        console.log(acModel.find({email: req.body.email}));
+        //  console.log(req.body.email)
+         console.log("acs has not clear yet for " + req.body.email);
         }
         else{
-          console.log("Adding new user on login");
-          console.log(req.body.email)
+          console.log("Adding new user on login " + req.body.email);
           const newAc = new acModel({
             email: req.body.email
           });

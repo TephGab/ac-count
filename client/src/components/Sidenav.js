@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Home, BarChart2 } from 'react-feather';
+import { Home, BarChart2, Activity } from 'react-feather';
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -26,6 +26,12 @@ const Sidenav = () => {
             <NavLink exact to="/counter" className="nav-link" activeClassName="navActive">  
                <BarChart2 size={17}/>
                 Counter
+              </NavLink>
+            </li>
+            <li>
+              <NavLink exact to="/user-sheet" className="nav-link" activeClassName="navActive">  
+                <Activity size={17}/>
+                  UserSheet
               </NavLink>
             </li>
             {user?.result.email == "artengineerdaudier4@gmail.com" ? 
