@@ -120,6 +120,7 @@ const Counter = () => {
       dispatch(addAc(acs, true, temp_user, 'reset'));
       // dispatch(getAc(user.result.email));
       //  window.location.replace('/counter');
+      dispatch(getAc(user.result.email));
        setshowAc(true);
       // dispatch(addAc('', true, user.result.email, 'reset'));
       //dispatch(getAc(user.result.email));
