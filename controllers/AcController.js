@@ -24,79 +24,92 @@ module.exports.getAc = (req, res) => {
 
   module.exports.addAc = async (req, res) => {
     if(req.body.etat === true){
-      if(acModel.find({email: req.body.email}).select('email'))
-       {
-        console.log(acModel.find({email: req.body.email}));
-        //  console.log(req.body.email)
-         console.log("acs has not clear yet for " + req.body.email);
-        }
-        else{
-          console.log("Adding new user on login " + req.body.email);
-          const newAc = new acModel({
-            email: req.body.email
-          });
-          try {
-            const ac = await newAc.save();
-            return res.status(201).json(ac);
-          } catch (err) {
-            return res.status(400).send(err);
+      acModel.findOne({email: req.body.email}, (err, docs) => {
+        if (!err)
+         {
+           if(docs === null){
+            console.log("Adding new user on login " + req.body.email);
+            const newAc = new acModel({email: req.body.email });
+              try {
+                    const ac = newAc.save();
+                    return res.status(201).json(ac);
+                  } catch (err) {
+                      return res.status(400).send(err);
+                  }
+           }
+           else{
+            if(req.body.isDel === 'reset'){
+              console.log('reset acs comtroller side')
+              const newAc = new acModel({
+                email: req.body.email
+              });
+              try {
+                const ac = newAc.save();
+                return res.status(201).json(ac);
+              } catch (err) {
+                return res.status(400).send(err);
+              }
+            }else console.log("Acs has not been clear yet for " + req.body.email);
+           }
+          //res.send(docs);
           }
-        }
-      // });
-      // const formatedAcCodes = "("+req.body.data.accessCode+"-done) ";
-      // const newAc = new acModel({
-      //   email: req.body.email
-      //   // isActive: true
-      // });
-      // try {
-      //   const ac = await newAc.save();
-      //   return res.status(201).json(ac);
-      // } catch (err) {
-      //   return res.status(400).send(err);
-      // }
-    };
-    if(req.body.etat === false && req.body.isDel != "reset"){
-      const formatedAcCodes = "("+req.body.data.accessCode+"-undone) ";
-      const newAc = new acModel({
-        email: req.body.email,
-        undoneAccessCode: formatedAcCodes,
-        isActive: true
+        else{
+          console.log("Error to get data : " + err);
+        } 
       });
-      try {
-        const ac = await newAc.save();
-        return res.status(201).json(ac);
-      } catch (err) {
-        return res.status(400).send(err);
-      }
+      // .select({ createdAt: -1 });
+      // const checkUserExist = acModel.findOne({email: req.body.email}).select('email').exec();
+      // if(checkUserExist)
+      //   {
+      //     console.log(checkUserExist);
+      //     console.log("Acs has not been clear yet for " + req.body.email);
+      //     return res.status(201).json({message: 'userAlreadyExist'});
+      //   }
+      //   if(!checkUserExist)
+      //     {
+      //       console.log(checkUserExist);
+      //       console.log("Adding new user on login " + req.body.email);
+      //       const newAc = new acModel({
+      //         email: req.body.email
+      //       });
+      //       try {
+      //         const ac = await newAc.save();
+      //         return res.status(201).json(ac);
+      //       } catch (err) {
+      //         return res.status(400).send(err);
+      //       }
+      //     }
     };
-    if(req.body.etat === false && req.body.isDel == "reset"){
-      console.log('controller reset')
-      const newAc = new oldAcModel({
-        _id: req.body.data[0]._id,
-        email:req.body.data[0].email,
-        doneAccessCode: req.body.data[0].doneAccessCode,
-        undoneAccessCode: req.body.data[0].undoneAccessCode
-      });
-      try {
-        const ac = await newAc.save();
-        return res.status(201).json(ac);
-      } catch (err) {
-        return res.status(400).send(err);
-      }
-      console.log('reset success')
-      // const formatedAcCodes = "("+req.body.data.accessCode+"-undone) ";
-      // const newAc = new acModel({
-      //   email: req.body.email,
-      //   undoneAccessCode: formatedAcCodes,
-      //   isActive: true
-      // });
-      // try {
-      //   const ac = await newAc.save();
-      //   return res.status(201).json(ac);
-      // } catch (err) {
-      //   return res.status(400).send(err);
-      // }
-    };
+    // if(req.body.etat === false && req.body.isDel != "reset"){
+    //   const formatedAcCodes = "("+req.body.data.accessCode+"-undone) ";
+    //   const newAc = new acModel({
+    //     email: req.body.email,
+    //     undoneAccessCode: formatedAcCodes,
+    //     isActive: true
+    //   });
+    //   try {
+    //     const ac = await newAc.save();
+    //     return res.status(201).json(ac);
+    //   } catch (err) {
+    //     return res.status(400).send(err);
+    //   }
+    // };
+    // if(req.body.etat === false && req.body.isDel == "reset"){
+    //   console.log('controller reset')
+    //   const newAc = new oldAcModel({
+    //     _id: req.body.data[0]._id,
+    //     email:req.body.data[0].email,
+    //     doneAccessCode: req.body.data[0].doneAccessCode,
+    //     undoneAccessCode: req.body.data[0].undoneAccessCode
+    //   });
+    //   try {
+    //     const ac = await newAc.save();
+    //     return res.status(201).json(ac);
+    //   } catch (err) {
+    //     return res.status(400).send(err);
+    //   }
+    //   console.log('reset success')
+    // };
     if(req.body.isGettingUser){
         userEmail = req.body.email;
         return 'user_ok';

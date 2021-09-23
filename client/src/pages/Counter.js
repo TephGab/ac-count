@@ -1,6 +1,6 @@
 import Sidenav from "../components/Sidenav";
 import Topnav from "../components/Topnav";
-import { AlertCircle, RefreshCcw } from "react-feather";
+import { AlertCircle } from "react-feather";
 //import swal from 'sweetalert';
 import { isEmpty } from '../Utils';
 import { useState, useEffect } from 'react';
@@ -9,14 +9,16 @@ import { addAc } from "../redux/actions/AcActions";
 import { getAc } from '../redux/actions/AcActions';
 import { updateAc } from '../redux/actions/AcActions';
 import { deleteAc } from '../redux/actions/AcActions';
+import { useHistory } from 'react-router-dom';
 
 const Counter = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [acData, setacData] = useState({ accessCode: "" });
-  const [doneCount, setdoneCount] = useState(0);
-  const [undoneCount, setundoneCount] = useState(0);
+  // const [doneCount, setdoneCount] = useState(0);
+  // const [undoneCount, setundoneCount] = useState(0);
   const [totaldone, settotaldone] = useState();
-  const [totalundone, settotalundone] = useState();
+  //const [totalundone, settotalundone] = useState();
   const [showAc, setshowAc] = useState(true);
   const acs = useSelector(state => state.acReducer);
   const [totalAcs, settotalAcs] = useState();
@@ -111,12 +113,17 @@ const Counter = () => {
 
     const acReset = () => {
       settotalAcs(acs)
-      dispatch(addAc(acs, false, user.result.email, 'reset'));
+      const temp_user = user.result.email;
       const acInfo = acs.find( ({ email }) => email === user.result.email )
       dispatch(deleteAc(acInfo._id))
       counted_acs.totalDone = 0;
       counted_acs.totalUndone = 0;
-      dispatch(addAc('', true, user.result.email));
+      dispatch(addAc(acs, true, temp_user, 'reset'));
+      // dispatch(getAc(user.result.email));
+       setshowAc(true);
+       window.location.replace('/counter');
+      // dispatch(addAc('', true, user.result.email, 'reset'));
+      //dispatch(getAc(user.result.email));
       // console.log('Acs has is running');
     } 
 
@@ -139,12 +146,12 @@ const Counter = () => {
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h3 className="h2">Counter</h3>
-              <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group me-2">
-                  {/* <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> */}
+              <div className="btn-toolbar mb-2 mb-md-0">
+                <div className="btn-group me-2">
+                  {/* <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
+                  <button type="button" className="btn btn-sm btn-outline-secondary">Export</button> */}
                 </div>
-                <button type="button" class="btn btn-danger btn-sm btn-outline-secondary" onClick={acReset}>
+                <button type="button" className="btn btn-danger btn-sm btn-outline-secondary" onClick={acReset}>
                   <span><AlertCircle/></span>
                   Clear
                 </button>

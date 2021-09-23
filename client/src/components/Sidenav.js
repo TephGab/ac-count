@@ -1,14 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { Home, BarChart2, Activity } from 'react-feather';
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+//import { useDispatch } from "react-redux";
 
 const Sidenav = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
   useEffect((res) => {
-    const result = res?.profileObj;
-
+    //const result = res?.profileObj;
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [])
 
@@ -34,7 +33,7 @@ const Sidenav = () => {
                   UserSheet
               </NavLink>
             </li>
-            {user?.result.email == "artengineerdaudier4@gmail.com" ? 
+            {user?.result.email === "artengineerdaudier4@gmail.com" ? 
             <li className="nav-item">
             <NavLink exact to="/ac-old" className="nav-link" activeClassName="navActive">  
                {/* <BarChart2 size={17}/> */}

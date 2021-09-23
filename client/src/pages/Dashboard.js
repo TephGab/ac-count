@@ -1,13 +1,10 @@
 import Sidenav from "../components/Sidenav";
 import Topnav from "../components/Topnav";
 import {
-  LineChart,
   BarChart,
   Bar,
-  Legend,
   CartesianGrid,
   Tooltip,
-  Line,
   XAxis,
   YAxis,
 } from "recharts";

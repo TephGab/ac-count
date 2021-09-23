@@ -40,10 +40,12 @@ export const addAc = (data, etat, email, isDel) => {
           console.log('error');
         } else {
           if(isDel === 'reset'){
-            dispatch({ type: ADD_OLD_AC, payload: res.data });
+           // dispatch({ type: GET_ALL_AC, payload: res.data });
+            // dispatch({ type: ADD_OLD_AC, payload: res.data });
             console.log('reset action en fonction')
           }else{
             dispatch({ type: ADD_AC, payload: res.data });
+           // dispatch({ type: GET_ALL_AC, payload: res.data });
           }
           console.log('Success');
         }

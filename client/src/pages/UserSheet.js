@@ -1,16 +1,16 @@
 import Sidenav from "../components/Sidenav";
 import Topnav from "../components/Topnav";
-import Spreadsheet from "react-spreadsheet";
+//import Spreadsheet from "react-spreadsheet";
 
 const UserSheet = () => {
-  const RangeView = ({ A6 }) => (
-    <input
-      type="range"
-      value={A6}
-      disabled
-      style={{ pointerEvents: "none" }}
-    />
-  );
+  // const RangeView = ({ A6 }) => (
+  //   <input
+  //     type="range"
+  //     value={A6}
+  //     disabled
+  //     style={{ pointerEvents: "none" }}
+  //   />
+  // );
   return (
     <div>
       <Topnav />
