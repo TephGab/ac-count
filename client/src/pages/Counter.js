@@ -88,9 +88,9 @@ const Counter = () => {
         await dispatch(updateAc(acInfo._id, e.totalDone[i], true, user.result.email));
       }
     }
-    else{
-      await dispatch(addAc(totaldone, true, user.result.email));
-    }
+    // else{
+    //   await dispatch(addAc(totaldone, true, user.result.email));
+    // }
     setshowAc(true);
   }
 
@@ -101,13 +101,12 @@ const Counter = () => {
       if(acInfo.email)
       {
         for (let i = 0; i < e.totalUndone.length; i++) {
-          console.log(i)
           await dispatch(updateAc(acInfo._id, e.totalUndone[i], false, user.result.email));
         }
       }
-      else{
-        await dispatch(addAc(acData, false, user.result.email));
-      }
+      // else{
+      //   await dispatch(addAc(acData, false, user.result.email));
+      // }
       setshowAc(true);
     }
 
@@ -120,7 +119,7 @@ const Counter = () => {
       counted_acs.totalUndone = 0;
       dispatch(addAc(acs, true, temp_user, 'reset'));
       // dispatch(getAc(user.result.email));
-       window.location.replace('/counter');
+      //  window.location.replace('/counter');
        setshowAc(true);
       // dispatch(addAc('', true, user.result.email, 'reset'));
       //dispatch(getAc(user.result.email));
