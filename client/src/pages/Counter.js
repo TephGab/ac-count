@@ -120,8 +120,8 @@ const Counter = () => {
       counted_acs.totalUndone = 0;
       dispatch(addAc(acs, true, temp_user, 'reset'));
       // dispatch(getAc(user.result.email));
-       setshowAc(true);
        window.location.replace('/counter');
+       setshowAc(true);
       // dispatch(addAc('', true, user.result.email, 'reset'));
       //dispatch(getAc(user.result.email));
       // console.log('Acs has is running');

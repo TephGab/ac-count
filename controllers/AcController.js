@@ -28,7 +28,7 @@ module.exports.getAc = (req, res) => {
         if (!err)
          {
            if(docs === null){
-            console.log("Adding new user on login " + req.body.email);
+            console.log("Adding new user on login or reset " + req.body.email);
             const newAc = new acModel({email: req.body.email });
               try {
                     const ac = newAc.save();
