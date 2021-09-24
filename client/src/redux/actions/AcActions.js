@@ -75,6 +75,8 @@ export const deleteAc = (acId) => {
     })
       .then((res) => {
         dispatch({ type: DELETE_AC, payload: { acId } });
+        console.log('deleted successfuly');
+        console.log(res.data)
       })
       .catch((err) => console.log(err));
   };

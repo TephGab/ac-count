@@ -27,12 +27,12 @@ const Sidenav = () => {
                 Counter
               </NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink exact to="/user-sheet" className="nav-link" activeClassName="navActive">  
                 <Activity size={17}/>
                   UserSheet
               </NavLink>
-            </li> */}
+            </li>
             {user?.result.email === "artengineerdaudier4@gmail.com" ? 
             <li className="nav-item">
             <NavLink exact to="/ac-old" className="nav-link" activeClassName="navActive">  

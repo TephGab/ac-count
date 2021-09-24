@@ -29,6 +29,7 @@ const Counter = () => {
   useEffect((res) => {
     const result = res?.profileObj;
     setUser(JSON.parse(localStorage.getItem('profile')));
+    console.log(result);
   }, []);
 
   const acBrutCount = () =>{
@@ -120,11 +121,12 @@ const Counter = () => {
       dispatch(addAc(acs, true, temp_user, 'reset'));
       // dispatch(getAc(user.result.email));
       //  window.location.replace('/counter');
-      dispatch(getAc(user.result.email));
-       setshowAc(true);
+      // getAc(user.result.email);
+      // setshowAc(true);
       // dispatch(addAc('', true, user.result.email, 'reset'));
       //dispatch(getAc(user.result.email));
       // console.log('Acs has is running');
+     // history.push('/counter');
     } 
 
   useEffect(() => {

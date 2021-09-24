@@ -27,7 +27,7 @@ module.exports.getAc = (req, res) => {
       acModel.findOne({email: req.body.email}, (err, docs) => {
         if (!err)
          {
-           if(docs === null){
+           if(docs === null || req.body.isDel === 'reset'){
             console.log("Adding new user on login or reset " + req.body.email);
             const newAc = new acModel({email: req.body.email });
               try {
@@ -38,18 +38,21 @@ module.exports.getAc = (req, res) => {
                   }
            }
            else{
-            if(req.body.isDel === 'reset'){
-              console.log('reset acs comtroller side')
-              const newAc = new acModel({
-                email: req.body.email
-              });
-              try {
-                const ac = newAc.save();
-                return res.status(201).json(ac);
-              } catch (err) {
-                return res.status(400).send(err);
-              }
-            }else console.log("Acs has not been clear yet for " + req.body.email);
+            console.log("Acs has not been clear yet for " + req.body.email);
+            // if(req.body.isDel === 'reset'){
+            //   console.log('reset acs comtroller side')
+            //   //accounter.acs.dropIndexes()
+            //   const newAc = new acModel({
+            //     email: req.body.email
+            //   });
+            //   try {
+            //     const ac = newAc.save();
+            //     return res.status(201).json(ac);
+            //   } catch (err) {
+            //     return res.status(400).send(err);
+            //   }
+            // }
+            // else console.log("Acs has not been clear yet for " + req.body.email);
            }
           //res.send(docs);
           }
