@@ -180,7 +180,7 @@ const Counter = () => {
                 <thead>
                   <tr>
                     <th scope="col" style={{display: 'flex', alignItems: 'center', padding:"0", fontSize: '1rem'}}>
-                      <div className="w-50 m-0 p-0"> Undone: <span style={{color: '##38761d'}}>{!isEmpty(counted_acs) && counted_acs.totalUndone} </span></div>
+                      <div className="w-50 m-0 p-0"> Restart: <span style={{color: '##38761d'}}>{!isEmpty(counted_acs) && counted_acs.totalUndone} </span></div>
                       <div className="w-50 m-0 p-0"> Done: <span style={{color: '#d45a00'}}> {!isEmpty(counted_acs) && counted_acs.totalDone }</span></div>
                     </th>
                   </tr>
