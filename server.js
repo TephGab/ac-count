@@ -14,7 +14,7 @@ const app = express();
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'allowedHeaders': ['sessionIdd', 'Content-Type'],
   'exposedHeaders': ['sessionId'],
   'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
   'preflightContinue': false
@@ -26,10 +26,10 @@ app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 // app.use(cookieParser());
 
 //routes
-app.use('/api/ac', acRoutes);
+app.use('/apiac', acRoutes);
 
 
-if(process.env.NODE_ENV === 'production'){
+if(process.env.NODE_ENV === 'developement'){
   app.use(express.static(path.join(__dirname, '/client/build')));
 
   app.get('*', (req, res) => {

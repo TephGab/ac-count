@@ -21,8 +21,8 @@ export const getAc = (email) => {
     return axios
       .get(`${REACT_APP_API_URL}/api/ac/`)
       .then((res) => {
-        const totalDone = res.data[0].doneAccessCode.length;
-        const totalUndone = res.data[0].undoneAccessCode.length;
+        const totalDone = res.data.doneAccessCode;
+        const totalUndone = res.data.undoneAccessCode;
         dispatch({ type: COUNT_AC, payload: { totalDone, totalUndone }});
         dispatch({ type: GET_ALL_AC, payload: res.data });
       })

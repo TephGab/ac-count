@@ -5,7 +5,7 @@ const oldAcController = require('../controllers/OldAcController');
 
 router.get('/', acController.getAc);
 router.post('/', acController.addAc);
-router.patch('/:id', acController.updateAc);
+router.patch('/id', acController.updateAc);
 router.delete('/:id', acController.deleteAc);
 // router.post('/', oldAcController.addOldAc);
 

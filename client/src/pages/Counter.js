@@ -32,52 +32,6 @@ const Counter = () => {
     console.log(result);
   }, []);
 
-  const acBrutCount = () =>{
-    let allAcs = acData.accessCode;
-    let removeWords = allAcs.replace(/Review|x|of|Session|Do|you|want|to|(|)|dismiss|this|Session|Cancel|-|OK/gi, " ");
-    let removeSpaces = removeWords.replace(/\s+|/gi, '');
-
-   var checkAc = /[1234567890]/ig
-   var checkDOneUndone = /completed|restart|done|undone/ig,ci
-   var tabloAc = removeSpaces.match(checkAc);
-   var tabloDoneUndone = removeSpaces.match(checkDOneUndone);
-   var tab1 = [];
-   var tab2 = [];
-   var tot_done = [];
-   var tot_undone = [];
-   var tabString = tabloAc.toString();
-   var tabOnlyNum = tabString.replace(/,/gi, " ");
-   var removeAllSpaces = tabOnlyNum.replace(/\s+|/gi, '');
-   for (let i = 0; i <= removeAllSpaces.length-9 ; i+=9) {
-     tab1.push(removeAllSpaces.substring(i, i+9));
-   }
-
-   for (let i = 0; i < tab1.length; i++) {
-     let part1 = tab1[i].substring(0, 3) + '-';
-     let part2 = tab1[i].substring(3, 6) + '-';
-     let part3 = tab1[i].substring(6, 9)
-     tab2.push(part1 + part2 + part3);
-   }
-   
-   for (let i = 0; i < tabloDoneUndone.length; i++) {
-      if(tabloDoneUndone[i] == 'completed'){
-        tab2[i] = tab2[i] + '-completed'; 
-      }
-   }
-
-   for (let i = 0; i < tab2.length; i++) {
-    if(tab2[i].includes('completed')){
-      tot_done.push(tab2[i]); 
-    }
-    else{
-      tot_undone.push(tab2[i] + '-restart'); 
-    }
- }
-  const acInfo = acs.find( ({ email }) => email === user.result.email )
-  handleSubmitDone({totalDone: tot_done});
-  handleSubmitUndone({totalUndone: tot_undone})
- }
-
   const handleSubmitDone = async (e) =>{
     console.log(e);
    // e.preventDefault();
@@ -144,7 +98,7 @@ const Counter = () => {
 
       <div className="container-fluid">
         <div className="row">
-          <Sidenav />
+          <Sidenav>
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h3 className="h2">Counter</h3>
@@ -161,7 +115,7 @@ const Counter = () => {
             </div>
 
             {/* Text area accodes */}
-            <div className="form-outline mb-4">
+            <div className="form-outline mb-4"">
             <textarea className="form-control" id="textAreaExample6" placeholder="Add access code" rows="3" name="titre" value={acData.accessCode} onChange={(e)=> setacData({ ...acData, accessCode: e.target.value})} ></textarea>
             <div>
               {

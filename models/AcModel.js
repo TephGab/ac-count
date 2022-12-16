@@ -12,6 +12,7 @@ const AcSchema = new mongoose.Schema(
     },
     doneAccessCode: {
       type: [String]
+    }
     },
     undoneAccessCode: {
       type: [String]
