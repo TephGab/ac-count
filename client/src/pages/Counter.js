@@ -51,7 +51,6 @@ const Counter = () => {
 
     const handleSubmitUndone = async (e) =>{
       //e.preventDefault();
-     // const acId = acs.map((ac) => ac._id);
      const acInfo = acs.find( ({ email }) => email === user.result.email )
       if(acInfo.email)
       {
@@ -59,9 +58,9 @@ const Counter = () => {
           await dispatch(updateAc(acInfo._id, e.totalUndone[i], false, user.result.email));
         }
       }
-      // else{
-      //   await dispatch(addAc(acData, false, user.result.email));
-      // }
+      else{
+        await dispatch(addAc(acData, false, user.result.email));
+      }
       setshowAc(true);
     }
 
@@ -73,14 +72,14 @@ const Counter = () => {
       counted_acs.totalDone = 0;
       counted_acs.totalUndone = 0;
       dispatch(addAc(acs, true, temp_user, 'reset'));
-      // dispatch(getAc(user.result.email));
+      dispatch(getAc(user.result.email));
       //  window.location.replace('/counter');
-      // getAc(user.result.email);
-      // setshowAc(true);
-      // dispatch(addAc('', true, user.result.email, 'reset'));
-      //dispatch(getAc(user.result.email));
-      // console.log('Acs has is running');
-     // history.push('/counter');
+      getAc(user.result.email);
+      setshowAc(true);
+      dispatch(addAc('', true, user.result.email, 'reset'));
+      dispatch(getAc(user.result.email));
+      console.log('Acs has is running');
+      history.push('/counter');
     } 
 
   useEffect(() => {
