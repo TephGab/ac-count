@@ -148,30 +148,12 @@ const Counter = () => {
                   </tr>
                 </tbody>
               </table>
-              {/* <table className="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col" style={{width:"50%", padding:"0"}}>Done: {!isEmpty(counted_acs) && counted_acs.totalDone } </th>
-                    <th scope="col" style={{width:"50%", padding:"0"}}>Undone: {!isEmpty(counted_acs) && counted_acs.totalUndone }</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={{maxWidth:"100%", whiteSpace: "normal", wordWrap: "normal"}}>
-                    {!isEmpty(acs) && acs.map((ac, id) => { return <td> { ac.doneAccessCode } </td> })}
-                    </td>
-                    <td style={{maxWidth:"100%", whiteSpace: "normal", wordWrap: "normal"}}>
-                    {!isEmpty(acs) && acs.map((ac, id) => { return <div style={{display: "inlineBlock"}} className="col-md-10"> { ac.undoneAccessCode } </div> })}
-                    </td>
-                  </tr>
-                </tbody>
-              </table> */}
             </div>
           </main>
         </div>
       <div>
 
-      <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
     </div>
   );
 };
