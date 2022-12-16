@@ -169,7 +169,7 @@ const Counter = () => {
             </div>
           </main>
         </div>
-      </div>
+      <div>
 
       <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
     </div>
